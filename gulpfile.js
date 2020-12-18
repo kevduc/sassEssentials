@@ -22,7 +22,7 @@ function styles() {
     .pipe(
       sass({
         sourcemap: true,
-        style: "compressed"
+        style: "compressed",
       }).on("error", sass.logError)
     )
     .pipe(gulp.dest(dest + "css"));
@@ -38,15 +38,9 @@ function server() {
   browserSync.init({
     notify: false,
     server: {
-      baseDir: dest
-    }
+      baseDir: dest,
+    },
   });
-
-  gulp
-    .watch(source + "sass/**/*.scss", styles)
-    .on("change", browserSync.reload);
-  gulp.watch(dest + "js/**/*.js", js).on("change", browserSync.reload);
-  gulp.watch(dest + "index.html", html).on("change", browserSync.reload);
 }
 
 var build = gulp.series(gulp.parallel(js, styles, html), server, watch);
